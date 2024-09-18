@@ -74,6 +74,5 @@ RUN cp -r actr7.x/tutorial actr7.x/original-tutorial
 
 RUN sbcl --quit --load quicklisp/setup.lisp --eval '(push :standalone *features*)' --load actr7.x/load-act-r.lisp
 
-CMD ["run-jupyter.sh"]
-
-ENTRYPOINT ["/start-it.sh"]
+# Run Jupyter by default
+ENTRYPOINT ["/start-it.sh", "run-jupyter.sh"]
