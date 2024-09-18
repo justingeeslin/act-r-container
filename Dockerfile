@@ -7,8 +7,8 @@ RUN apt-get install -y wget bzip2 make unzip curl
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
 
-RUN npm install --save express
-RUN npm install --save socket.io
+#RUN npm install --save express
+#RUN npm install --save socket.io
 
 RUN pip install --no-cache notebook numpy matplotlib scipy jupyter_server_proxy
 
