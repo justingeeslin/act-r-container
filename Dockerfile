@@ -7,7 +7,7 @@ EXPOSE 4000 2650 8888
 RUN apt-get update && apt-get install -y
 RUN apt-get install -y wget bzip2 make unzip curl
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs
 
 #RUN npm install --save express
