@@ -1,6 +1,9 @@
 FROM python:3.7-slim
 LABEL maintainer="Dan Bothell <db30@andrew.cmu.edu>"
 
+# Expose required ports
+EXPOSE 4000 2650 8888
+
 RUN apt-get update && apt-get install -y
 RUN apt-get install -y wget bzip2 make unzip curl
 
@@ -70,5 +73,7 @@ RUN rm Dockerfile
 RUN cp -r actr7.x/tutorial actr7.x/original-tutorial
 
 RUN sbcl --quit --load quicklisp/setup.lisp --eval '(push :standalone *features*)' --load actr7.x/load-act-r.lisp
+
+CMD ["run-jupyter.sh"]
 
 ENTRYPOINT ["/start-it.sh"]
