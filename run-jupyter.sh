@@ -14,8 +14,7 @@ JUPYTER_PID=$!
 sleep 10
 
 # Check if the Jupyter Notebook server is running
-if ps -p $JUPYTER_PID > /dev/null
-then
+if [[ -d /proc/$JUPYTER_PID ]]; then
    echo "Jupyter Notebook server started successfully."
 else
    echo "Failed to start Jupyter Notebook server."
