@@ -55,10 +55,6 @@ RUN chmod 777 run-jupyter.sh && mv run-jupyter.sh /run-jupyter.sh
 
 USER ${NB_USER}
 
-RUN wget http://act-r.psy.cmu.edu/actr7.x/actr7.container.zip && \
-    unzip actr7.container.zip  && \
-    rm -r actr7.container.zip
-
 RUN mv run-node-env.lisp actr7.x/user-loads/
 RUN mv run-node.sh actr7.x/
 
