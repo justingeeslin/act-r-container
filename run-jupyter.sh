@@ -21,4 +21,4 @@ else
 fi
 
 # Optionally, you can wait for the server to finish running, or you can keep the script running
-# wait $JUPYTER_PID
+wait $JUPYTER_PID
