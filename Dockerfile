@@ -1,6 +1,9 @@
 FROM python:3.7-slim
 LABEL maintainer="Dan Bothell <db30@andrew.cmu.edu>"
 
+# Set SBCL options to increase memory allocation
+ENV SBCL_OPTIONS="--dynamic-space-size 4096"
+
 # Expose required ports
 EXPOSE 4000 2650 8888
 
