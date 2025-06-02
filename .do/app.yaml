@@ -1,11 +1,12 @@
 name: act-r-container
 services:
-- name: web
+# Main ACT-R Environment web interface
+- name: act-r-web
   source_dir: /
   github:
     repo: justingeeslin/act-r-container
     branch: main
-  run_command: /start-it.sh
+  run_command: /start-multiport.sh
   environment_slug: docker
   instance_count: 1
   instance_size_slug: basic-xxs
@@ -14,5 +15,45 @@ services:
   envs:
   - key: PORT
     value: "4000"
+  routes:
+  - path: /
+
+# Jupyter notebook server (requires Basic plan or higher)
+- name: act-r-jupyter
+  source_dir: /
+  github:
+    repo: justingeeslin/act-r-container
+    branch: main
+  run_command: /start-multiport.sh
+  environment_slug: docker
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  dockerfile_path: Dockerfile
+  http_port: 8888
+  envs:
+  - key: PORT
+    value: "8888"
+  - key: JUPYTER_ONLY
+    value: "true"
+  routes:
+  - path: /
+
+# ACT-R remote interface (requires Basic plan or higher)  
+- name: act-r-remote
+  source_dir: /
+  github:
+    repo: justingeeslin/act-r-container
+    branch: main
+  run_command: /start-multiport.sh
+  environment_slug: docker
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  dockerfile_path: Dockerfile
+  http_port: 2650
+  envs:
+  - key: PORT
+    value: "2650"
+  - key: REMOTE_ONLY
+    value: "true"
   routes:
   - path: /
