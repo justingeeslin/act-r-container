@@ -8,6 +8,12 @@ healthcheckTimeout = 300
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
+# Railway supports multiple ports - expose all ACT-R ports
 [[deploy.environmentVariables]]
 name = "PORT"
 value = "4000"
+
+# Note: Railway will auto-assign public URLs for additional ports
+# Port 4000: ACT-R Environment web interface
+# Port 2650: ACT-R remote interface  
+# Port 8888: Jupyter notebook server
