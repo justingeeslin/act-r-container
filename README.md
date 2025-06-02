@@ -1,6 +1,28 @@
 # act-r-container
 Code to build a Docker container with ACT-R in it along with the Node.js server running to support the HTML versions of the ACT-R Environment and experiment window viewer.
 
+## 🚀 One-Click Deploy
+
+Deploy ACT-R container instantly to popular cloud platforms with free tiers:
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/github/justingeeslin/act-r-container)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/justingeeslin/act-r-container)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/justingeeslin/act-r-container)
+
+[![Deploy to Fly.io](https://fly.io/static/images/launch.svg)](https://fly.io/launch?template=https://github.com/justingeeslin/act-r-container)
+
+[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/justingeeslin/act-r-container)
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/justingeeslin/act-r-container)
+
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/justingeeslin/act-r-container)
+
+> **Note**: After deployment, the ACT-R Environment will be available at your app's URL, and the experiment window viewer at `/expwindow.html`. Some platforms may require additional configuration for multiple ports (2650 for ACT-R remote interface, 8888 for Jupyter notebooks).
+
+## Manual Deployment Options
+
 Below are four ways that one could use this without having to rebuild the container.  The first two work online without needing to install any software using the mybinder and Play with Docker free services, and the other two require that one installs the Docker software.  If you have the Docker software you could also use these sources to build a custom version that includes additional models, notebooks, servers, etc.
 
 1) From mybinder.org (or other BinderHub) to run ACT-R from Python in Jupyter notebooks without any local installation necessary.

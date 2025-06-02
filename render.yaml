@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: act-r-container
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 4000
+    disk:
+      name: act-r-data
+      mountPath: /home/actr/actr7.x/tutorial
+      sizeGB: 1
