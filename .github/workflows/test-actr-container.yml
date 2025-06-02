@@ -59,7 +59,8 @@ jobs:
         docker run --rm act-r-container:test /bin/bash -c "
           echo 'Testing container scripts...' &&
           ls -la /start-it.sh /act-r.sh /run-jupyter.sh &&
-          file /start-it.sh /act-r.sh /run-jupyter.sh
+          echo 'Checking script headers:' &&
+          head -1 /start-it.sh /act-r.sh /run-jupyter.sh
         "
 
   test-container-modes:
