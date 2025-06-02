@@ -40,6 +40,49 @@ The ACT-R Environment will be available from a browser at: http://localhost:4000
 
 Note, if you're using MacOS and working with ACT-R from another language, my experience is that it's faster to use this containered version than it is to run a Lisp locally on the machine!  That's because SBCL is faster than other Lisps, but the MacOS native version of SBCL has some threading or locking performance issues (not entirely sure which).  The SBCL in the container doesn't suffer from those issues, and the container overhead was less costly on my machine than those issues.
 
+## Testing
+
+This container includes a comprehensive test suite to verify that the ACT-R environment is functional and can run tutorial models successfully.
+
+### Running Tests
+
+To run the test suite inside the container:
+
+```bash
+# Run all tests
+python run_tests.py
+
+# Run with verbose output
+python run_tests.py -v
+
+# Run only basic functionality tests
+python run_tests.py --basic-only
+
+# Run only model tests
+python run_tests.py --models-only
+
+# Run only container functionality tests
+python run_tests.py --container-only
+```
+
+### Quick Integration Test
+
+For a quick verification that the environment is working:
+
+```bash
+python test_integration.py
+```
+
+### Test Categories
+
+The test suite includes:
+
+1. **Basic ACT-R Tests** - Core functionality and environment setup
+2. **Tutorial Model Tests** - Specific ACT-R models and Python interface
+3. **Container Functionality Tests** - Docker container specific features
+
+See `tests/README.md` for detailed documentation about the test suite.
+
 4) Because the container contains a Jupyter notebook server you can run it similar to the first option locally on a machine i.e. the Python connection through the Jupyter notebooks.  This is very similar to the previous one, but you would want to run it like this:
 
 Mac and Linux

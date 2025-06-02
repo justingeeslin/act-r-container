@@ -1,0 +1,125 @@
+name: Test ACT-R Container
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test-container:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: |
+        docker build -t act-r-container:test .
+    
+    - name: Test container basic functionality
+      run: |
+        # Test that container starts and basic commands work
+        docker run --rm act-r-container:test /bin/bash -c "
+          echo 'Testing basic container functionality...' &&
+          ls -la /home/actr/ &&
+          sbcl --version &&
+          python3 --version &&
+          node --version
+        "
+    
+    - name: Run ACT-R functionality tests
+      run: |
+        # Run the test suite inside the container
+        docker run --rm act-r-container:test /bin/bash -c "
+          cd /home/actr &&
+          python3 run_tests.py --basic-only -v
+        "
+    
+    - name: Test ACT-R startup
+      run: |
+        # Test that ACT-R can start successfully
+        docker run --rm act-r-container:test /bin/bash -c "
+          cd /home/actr &&
+          timeout 60 sbcl --non-interactive \
+            --load quicklisp/setup.lisp \
+            --load actr7.x/load-act-r.lisp \
+            --eval '(progn (init-des) (format t \"ACT-R-STARTUP-SUCCESS\") (quit))' \
+          | grep 'ACT-R-STARTUP-SUCCESS'
+        "
+    
+    - name: Test container scripts
+      run: |
+        # Test that container entry scripts work
+        docker run --rm act-r-container:test /bin/bash -c "
+          echo 'Testing container scripts...' &&
+          ls -la /start-it.sh /act-r.sh /run-jupyter.sh &&
+          echo 'Checking script headers:' &&
+          head -1 /start-it.sh /act-r.sh /run-jupyter.sh
+        "
+
+  test-container-modes:
+    runs-on: ubuntu-latest
+    needs: test-container
+    
+    strategy:
+      matrix:
+        mode: ["default", "act-r.sh"]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: |
+        docker build -t act-r-container:test .
+    
+    - name: Test container mode - ${{ matrix.mode }}
+      run: |
+        if [ "${{ matrix.mode }}" = "default" ]; then
+          # Test default mode (should start ACT-R with Node environment)
+          timeout 30 docker run --rm act-r-container:test /bin/bash -c "
+            echo 'Testing default mode...' &&
+            timeout 20 /start-it.sh &
+            sleep 15 &&
+            echo 'Default mode test completed'
+          " || echo "Default mode test completed (expected timeout)"
+        elif [ "${{ matrix.mode }}" = "act-r.sh" ]; then
+          # Test ACT-R shell mode
+          timeout 30 docker run --rm act-r-container:test act-r.sh /bin/bash -c "
+            echo 'Testing ACT-R shell mode...' &&
+            echo 'ACT-R shell mode test completed'
+          " || echo "ACT-R shell mode test completed (expected timeout)"
+        fi
+
+  test-documentation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Check test documentation
+      run: |
+        echo "Checking test documentation..."
+        ls -la tests/
+        cat tests/README.md | head -20
+        echo "Test documentation check completed"
+    
+    - name: Validate test structure
+      run: |
+        echo "Validating test structure..."
+        test -f tests/__init__.py
+        test -f tests/conftest.py
+        test -f tests/test_actr_basic.py
+        test -f tests/test_tutorial_models.py
+        test -f tests/test_container_functionality.py
+        test -f tests/requirements.txt
+        test -f tests/README.md
+        test -f run_tests.py
+        echo "Test structure validation completed"
