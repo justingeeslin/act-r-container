@@ -1,6 +1,7 @@
 services:
+  # Main ACT-R web interface
   - type: web
-    name: act-r-container
+    name: act-r-main
     env: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
@@ -13,3 +14,18 @@ services:
       name: act-r-data
       mountPath: /home/actr/actr7.x/tutorial
       sizeGB: 1
+  
+  # Note: Render free tier supports only one service
+  # For Jupyter (port 8888) and ACT-R remote (port 2650), 
+  # upgrade to paid plan and add additional services:
+  
+  # - type: web
+  #   name: act-r-jupyter
+  #   env: docker
+  #   dockerfilePath: ./Dockerfile
+  #   dockerContext: .
+  #   plan: starter
+  #   startCommand: "/start-it.sh run-jupyter.sh"
+  #   envVars:
+  #     - key: PORT
+  #       value: 8888

@@ -19,7 +19,27 @@ Deploy ACT-R container instantly to popular cloud platforms with free tiers:
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/justingeeslin/act-r-container)
 
-> **Note**: After deployment, the ACT-R Environment will be available at your app's URL, and the experiment window viewer at `/expwindow.html`. Some platforms may require additional configuration for multiple ports (2650 for ACT-R remote interface, 8888 for Jupyter notebooks).
+### 🔌 Port Configuration
+
+ACT-R container uses three ports for different interfaces:
+
+- **Port 4000**: ACT-R Environment web interface (main UI) - ✅ **Available on all platforms**
+- **Port 2650**: ACT-R remote interface (for Python/other language connections) 
+- **Port 8888**: Jupyter notebook server
+
+#### Platform Support for Multiple Ports:
+
+| Platform | Main UI (4000) | Jupyter (8888) | Remote (2650) | Notes |
+|----------|----------------|----------------|---------------|-------|
+| **Railway** | ✅ | ✅ | ✅ | Auto-assigns URLs for all ports |
+| **Fly.io** | ✅ | ✅ | ✅ | Configured for all three ports |
+| **DigitalOcean** | ✅ | ✅* | ✅* | *Requires Basic plan for multiple services |
+| **Render** | ✅ | ✅* | ✅* | *Free tier: main UI only. Paid: all ports |
+| **Heroku** | ✅ | ❌ | ❌ | Single port per dyno limitation |
+| **Google Cloud Run** | ✅ | ❌ | ❌ | Single port per service |
+| **Vercel** | ❌ | ❌ | ❌ | Static/serverless only |
+
+> **💡 Tip**: For full functionality including Jupyter notebooks, **Railway** and **Fly.io** offer the best free tier support for multiple ports.
 
 ## Manual Deployment Options
 
