@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  act-r:
+    build: .
+    ports:
+      - "4000:4000"   # ACT-R Environment web interface
+      - "2650:2650"   # ACT-R remote interface
+      - "8888:8888"   # Jupyter notebook server
+    environment:
+      - PORT=4000
+    volumes:
+      - act-r-tutorial:/home/actr/actr7.x/tutorial
+    restart: unless-stopped
+
+volumes:
+  act-r-tutorial:

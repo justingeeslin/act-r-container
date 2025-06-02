@@ -1,0 +1,29 @@
+{
+  "name": "ACT-R Container",
+  "description": "Docker container with ACT-R cognitive architecture, Node.js server, and Jupyter notebooks",
+  "repository": "https://github.com/justingeeslin/act-r-container",
+  "logo": "https://avatars.githubusercontent.com/u/justingeeslin",
+  "keywords": ["act-r", "cognitive-architecture", "lisp", "jupyter", "docker"],
+  "stack": "container",
+  "env": {
+    "PORT": {
+      "description": "Port for the web interface",
+      "value": "4000"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [],
+  "buildpacks": [],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "python run_tests.py"
+      }
+    }
+  }
+}

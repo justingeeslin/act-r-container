@@ -1,0 +1,18 @@
+name: act-r-container
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: justingeeslin/act-r-container
+    branch: main
+  run_command: /start-it.sh
+  environment_slug: docker
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  dockerfile_path: Dockerfile
+  http_port: 4000
+  envs:
+  - key: PORT
+    value: "4000"
+  routes:
+  - path: /
